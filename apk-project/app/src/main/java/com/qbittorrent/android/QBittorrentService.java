@@ -57,7 +57,7 @@ public class QBittorrentService extends Service {
         if (shouldStart) {
             new Thread(this::startQBittorrent).start();
         } else {
-            broadcastLog("INFO", "qBittorrent 已在运行中");
+            broadcastLog("INFO", "qBittorrent уже запущен");
         }
         return START_STICKY;
     }
@@ -88,7 +88,7 @@ public class QBittorrentService extends Service {
         cacertsDir.mkdirs();
         File systemCacerts = new File("/system/etc/security/cacerts");
         if (!systemCacerts.exists() || systemCacerts.list() == null) {
-            broadcastLog("WARN", "系统 CA 证书目录不存在");
+            broadcastLog("WARN", "Каталог системных CA-сертификатов не найден");
             return;
         }
         String[] certs = systemCacerts.list();
@@ -123,9 +123,9 @@ public class QBittorrentService extends Service {
             }
             bundleOut.close();
         } catch (Exception e) {
-            broadcastLog("WARN", "CA 证书复制失败: " + e.getMessage());
+            broadcastLog("WARN", "Не удалось скопировать CA-сертификаты: " + e.getMessage());
         }
-        broadcastLog("INFO", "已复制 " + count + " 个 CA 证书");
+        broadcastLog("INFO", "Скопировано CA-сертификатов: " + count + "");
     }
 
     /** 递归删除目录 */
@@ -144,7 +144,7 @@ public class QBittorrentService extends Service {
     /** 从 assets 的 vuetorrent.zip 解压到应用数据目录 */
     private void copyQbWeb(File profileDir) {
         File targetDir = new File(profileDir, "vuetorrent");
-        broadcastLog("INFO", "正在解压 VueTorrent...");
+        broadcastLog("INFO", "Распаковка VueTorrent...");
         // 删除旧目录，确保使用最新的 zip
         if (targetDir.exists()) {
             deleteRecursive(targetDir);
@@ -172,16 +172,16 @@ public class QBittorrentService extends Service {
                 }
                 zis.closeEntry();
             }
-            broadcastLog("INFO", "VueTorrent 解压完成: " + targetDir.getAbsolutePath());
+            broadcastLog("INFO", "VueTorrent распакован: " + targetDir.getAbsolutePath());
             // 验证
             File indexHtml = new File(targetDir, "public/index.html");
             if (indexHtml.exists()) {
-                broadcastLog("INFO", "index.html 存在，大小: " + indexHtml.length());
+                broadcastLog("INFO", "index.html найден, размер: " + indexHtml.length());
             } else {
-                broadcastLog("WARN", "index.html 不存在！");
+                broadcastLog("WARN", "index.html не найден!");
             }
         } catch (IOException e) {
-            broadcastLog("WARN", "解压 VueTorrent 失败: " + e.getMessage());
+            broadcastLog("WARN", "Ошибка распаковки VueTorrent: " + e.getMessage());
         }
     }
 
@@ -192,9 +192,9 @@ public class QBittorrentService extends Service {
         String json = "{\"save_path\":\"" + downloadPath.replace("\\", "\\\\") + "\"}";
         int code = QbtApi.setPreferences(port, json);
         if (code == 200) {
-            broadcastLog("INFO", "已设置下载路径: " + downloadPath);
+            broadcastLog("INFO", "Путь загрузок установлен: " + downloadPath);
         } else {
-            broadcastLog("WARN", "设置下载路径失败，HTTP " + code);
+            broadcastLog("WARN", "Не удалось задать путь загрузок, HTTP " + code);
         }
     }
 
@@ -203,22 +203,22 @@ public class QBittorrentService extends Service {
         // 读取 WebUI 偏好
         String uiPref = readWebUIPref();
         if (!"vuetorrent".equals(uiPref)) {
-            broadcastLog("INFO", "用户选择默认 WebUI，跳过 VueTorrent 配置");
+            broadcastLog("INFO", "Выбран стандартный WebUI, настройка VueTorrent пропущена");
             return;
         }
 
         File altUIPath = new File(profileDir, "vuetorrent");
         if (!altUIPath.exists()) {
-            broadcastLog("WARN", "VueTorrent 目录不存在，跳过配置");
+            broadcastLog("WARN", "Каталог VueTorrent не найден, настройка пропущена");
             return;
         }
         String json = "{\"alternative_webui_enabled\":true,\"alternative_webui_path\":\"" +
                 altUIPath.getAbsolutePath().replace("\\", "\\\\") + "\"}";
         int code = QbtApi.setPreferences(readPort(), json);
         if (code == 200) {
-            broadcastLog("INFO", "已配置 VueTorrent 为默认 WebUI");
+            broadcastLog("INFO", "VueTorrent назначен WebUI по умолчанию");
         } else {
-            broadcastLog("WARN", "配置 VueTorrent 失败，HTTP " + code);
+            broadcastLog("WARN", "Не удалось настроить VueTorrent, HTTP " + code);
         }
     }
 
@@ -271,20 +271,20 @@ public class QBittorrentService extends Service {
         String content = QbtConfig.readFile(cfgFile);
         if (content.contains("Password_PBKDF2")) {
             // 密码已设置，不重复显示
-            broadcastLog("INFO", "WebUI 已有密码配置，跳过默认密码设置");
+            broadcastLog("INFO", "Пароль WebUI уже задан, установка пароля по умолчанию пропущена");
             return;
         }
         // 首次启动：通过 API 设置默认密码
         int code = QbtApi.setPreferences(readPort(), "{\"web_ui_password\":\"adminadmin\"}");
         if (code == 200) {
             broadcastLog("INFO", "========================================");
-            broadcastLog("INFO", "WebUI 默认密码已设置");
-            broadcastLog("INFO", "  用户名: admin");
-            broadcastLog("INFO", "  密码: adminadmin");
-            broadcastLog("INFO", "  (仅首次显示，后续启动不再提示)");
+            broadcastLog("INFO", "Установлен пароль WebUI по умолчанию");
+            broadcastLog("INFO", "  Логин: admin");
+            broadcastLog("INFO", "  Пароль: adminadmin");
+            broadcastLog("INFO", "  (показывается только при первом запуске)");
             broadcastLog("INFO", "========================================");
         } else {
-            broadcastLog("WARN", "设置密码失败，HTTP " + code);
+            broadcastLog("WARN", "Не удалось задать пароль, HTTP " + code);
         }
     }
 
@@ -303,7 +303,7 @@ public class QBittorrentService extends Service {
                 }
             }
 
-            broadcastLog("INFO", "正在启动 qBittorrent (JNI in-process)...");
+            broadcastLog("INFO", "Запуск qBittorrent (JNI in-process)...");
 
             File configDir = new File(getFilesDir(), "config");
             File downloadsDir = new File(Environment.getExternalStoragePublicDirectory(
@@ -317,7 +317,7 @@ public class QBittorrentService extends Service {
             // 首次启动写入默认配置（含中文语言）
             boolean firstRun = QbtConfig.writeDefaultConfig(configDir, readPort(), readDownloadPath());
             if (firstRun) {
-                broadcastLog("INFO", "首次启动，已写入默认配置（中文界面）");
+                broadcastLog("INFO", "Первый запуск: записана конфигурация по умолчанию (русский интерфейс)");
             }
 
             // 每次启动更新 config（端口/路径/AlternativeUI）
@@ -325,17 +325,17 @@ public class QBittorrentService extends Service {
             boolean cfgOk = QbtConfig.updateConfig(configDir, readPort(), readDownloadPath(),
                     new File(configDir, "vuetorrent").getAbsolutePath(), "vuetorrent".equals(uiPref));
             if (cfgOk) {
-                broadcastLog("INFO", "config 强制更新: port=" + readPort() + " path=" + readDownloadPath()
+                broadcastLog("INFO", "Конфигурация обновлена: port=" + readPort() + " path=" + readDownloadPath()
                         + " altUI=" + uiPref);
             } else {
-                broadcastLog("WARN", "更新 config 失败");
+                broadcastLog("WARN", "Не удалось обновить конфигурацию");
             }
 
             // 复制系统 CA 证书到 app 目录（OpenSSL 需要）
             copyCACerts(configDir);
 
-            broadcastLog("INFO", "配置目录: " + configDir.getAbsolutePath());
-            broadcastLog("INFO", "下载目录: " + downloadsDir.getAbsolutePath());
+            broadcastLog("INFO", "Каталог конфигурации: " + configDir.getAbsolutePath());
+            broadcastLog("INFO", "Каталог загрузок: " + downloadsDir.getAbsolutePath());
 
             // Load Qt libraries first (their JNI_OnLoad sets the JavaVM pointer).
             // The library names differ between the Qt5 and Qt6 builds, so load
@@ -362,7 +362,7 @@ public class QBittorrentService extends Service {
             broadcastLog("INFO", "  libqbt loaded, calling nativeMain...");
 
             nativeMainRunning = true;
-            broadcastLog("INFO", "进程已启动");
+            broadcastLog("INFO", "Процесс запущен");
 
             // Build arguments
             final int webuiPort = readPort();
@@ -371,7 +371,7 @@ public class QBittorrentService extends Service {
                     "--profile=" + configDir.getAbsolutePath(),
                     "--webui-port=" + webuiPort
             };
-            broadcastLog("INFO", "启动命令: " + String.join(" ", args));
+            broadcastLog("INFO", "Команда запуска: " + String.join(" ", args));
 
             // Run in a separate thread to avoid blocking the service
             new Thread(() -> {
@@ -385,7 +385,7 @@ public class QBittorrentService extends Service {
                     Log.e(TAG, "JNI error", e);
                 } catch (Exception e) {
                     nativeMainRunning = false;
-                    broadcastLog("ERROR", "启动失败: " + e.getMessage());
+                    broadcastLog("ERROR", "Ошибка запуска: " + e.getMessage());
                     Log.e(TAG, "Failed to start qBittorrent", e);
                 }
             }).start();
@@ -403,7 +403,7 @@ public class QBittorrentService extends Service {
                         Thread.sleep(2000);
                         Socket s = new Socket("127.0.0.1", webuiPort);
                         s.close();
-                        broadcastLog("INFO", "WebUI 就绪: http://localhost:" + webuiPort);
+                        broadcastLog("INFO", "WebUI готов: http://localhost:" + webuiPort);
                         // 首次启动设置默认密码
                         try { Thread.sleep(500); } catch (InterruptedException ignored) {}
                         setInitialPassword(profileDir);
@@ -412,18 +412,18 @@ public class QBittorrentService extends Service {
                         return;
                     } catch (Exception ignored) {}
                 }
-                broadcastLog("WARN", "WebUI 端口 " + webuiPort + " 未就绪（已等待 " + (maxAttempts * 2) + " 秒）");
+                broadcastLog("WARN", "Порт WebUI " + webuiPort + " не отвечает (ожидание " + (maxAttempts * 2) + " с)");
             }).start();
 
-            broadcastLog("INFO", "qBittorrent 启动线程已创建");
+            broadcastLog("INFO", "Поток запуска qBittorrent создан");
 
         } catch (UnsatisfiedLinkError e) {
             nativeMainRunning = false;
-            broadcastLog("ERROR", "加载库失败: " + e.getMessage());
+            broadcastLog("ERROR", "Ошибка загрузки библиотек: " + e.getMessage());
             Log.e(TAG, "Failed to load library", e);
         } catch (Exception e) {
             nativeMainRunning = false;
-            broadcastLog("ERROR", "启动失败: " + e.getMessage());
+            broadcastLog("ERROR", "Ошибка запуска: " + e.getMessage());
             Log.e(TAG, "Failed to start qBittorrent", e);
         }
     }
@@ -432,10 +432,10 @@ public class QBittorrentService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
-                    "qBittorrent 下载服务",
+                    "Служба загрузок qBittorrent",
                     NotificationManager.IMPORTANCE_LOW
             );
-            channel.setDescription("保持 qBittorrent 后台运行");
+            channel.setDescription("Поддерживает работу qBittorrent в фоне");
             NotificationManager manager = getSystemService(NotificationManager.class);
             if (manager != null) {
                 manager.createNotificationChannel(channel);
@@ -457,7 +457,7 @@ public class QBittorrentService extends Service {
 
         return builder
                 .setContentTitle("qBittorrent")
-                .setContentText("正在运行 - WebUI: http://localhost:" + readPort())
+                .setContentText("Работает — WebUI: http://localhost:" + readPort())
                 .setSmallIcon(android.R.drawable.stat_sys_download)
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
@@ -469,7 +469,7 @@ public class QBittorrentService extends Service {
         super.onDestroy();
         // 注意: native 层的 qBittorrent 线程无法在此安全终止, 进程内仍在运行,
         // 因此 nativeMainRunning 保持 true, 避免重启服务时产生第二个实例
-        broadcastLog("INFO", "服务已停止 (qBittorrent 继续在进程内运行)");
+        broadcastLog("INFO", "Служба остановлена (qBittorrent продолжает работать в процессе)");
     }
 
     @Override

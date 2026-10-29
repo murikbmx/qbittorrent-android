@@ -68,19 +68,19 @@ public class WelcomeActivity extends AppCompatActivity {
         String path = etPath.getText().toString().trim();
 
         if (portStr.isEmpty()) {
-            Toast.makeText(this, "请输入端口号", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Введите номер порта", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Integer parsed = QbtConfig.parsePort(portStr);
         if (parsed == null) {
-            Toast.makeText(this, "无效端口号 (范围 1024-65535)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Неверный порт (допустимо 1024-65535)", Toast.LENGTH_SHORT).show();
             return;
         }
         int port = parsed;
 
         if (path.isEmpty()) {
-            Toast.makeText(this, "请输入下载路径", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Введите путь для загрузок", Toast.LENGTH_SHORT).show();
             return;
         }
 

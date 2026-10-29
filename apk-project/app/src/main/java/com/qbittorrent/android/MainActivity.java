@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
             ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
             if (shortcutManager != null) {
                 ShortcutInfo shortcut = new ShortcutInfo.Builder(this, "settings")
-                        .setShortLabel("设置")
-                        .setLongLabel("打开 qBittorrent 设置")
+                        .setShortLabel("Настройки")
+                        .setLongLabel("Открыть настройки qBittorrent")
                         .setIcon(Icon.createWithResource(this, android.R.drawable.ic_menu_preferences))
                         .setIntent(new Intent(this, SettingsActivity.class).setAction(Intent.ACTION_VIEW))
                         .build();
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 if (request.isForMainFrame()) {
                     handler.post(() -> {
                         fabRefresh.setVisibility(android.view.View.VISIBLE);
-                        tvStatus.setText("WebUI 加载失败，点击右下角按钮重试");
+                        tvStatus.setText("Не удалось загрузить WebUI. Нажмите кнопку внизу справа, чтобы повторить");
                         loadingLayout.setVisibility(android.view.View.VISIBLE);
                     });
                 }
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
     private void startPortPolling() {
         if (polling) return;
         polling = true;
-        showLoading("正在启动 qBittorrent...");
+        showLoading("Запуск qBittorrent...");
 
         new Thread(() -> {
             SharedPreferences prefs = getSharedPreferences("qbt_prefs", MODE_PRIVATE);
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         Thread.sleep(POLL_INTERVAL_MS);
                         final int attempt = i + 1;
-                        handler.post(() -> tvStatus.setText("正在启动 qBittorrent... (" + attempt + ")"));
+                        handler.post(() -> tvStatus.setText("Запуск qBittorrent... (" + attempt + ")"));
                     } catch (InterruptedException ignored) {
                         break;
                     }
@@ -239,18 +239,18 @@ public class MainActivity extends AppCompatActivity {
             final boolean isReady = ready;
             if (isReady) {
                 // 端口就绪后，先配置 WebUI 类型，再加载页面
-                handler.post(() -> tvStatus.setText("正在配置 WebUI..."));
+                handler.post(() -> tvStatus.setText("Настройка WebUI..."));
                 configureWebUI(port);
             }
 
             handler.post(() -> {
                 polling = false;
                 if (isReady) {
-                    showLoading("正在加载 WebUI...");
+                    showLoading("Загрузка WebUI...");
                     webView.clearCache(true);
                     webView.loadUrl(getWebUIUrl());
                 } else {
-                    tvStatus.setText("qBittorrent 启动超时，点击右下角按钮重试");
+                    tvStatus.setText("Превышено время запуска qBittorrent. Нажмите кнопку внизу справа, чтобы повторить");
                     fabRefresh.setVisibility(android.view.View.VISIBLE);
                 }
             });
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String message = intent.getStringExtra(QBittorrentService.EXTRA_MESSAGE);
-                if (message != null && message.contains("WebUI") && message.contains("就绪")) {
+                if (message != null && message.contains("WebUI") && message.contains("готов")) {
                     if (!webUILoaded && !polling) {
                         handler.post(() -> startPortPolling());
                     }

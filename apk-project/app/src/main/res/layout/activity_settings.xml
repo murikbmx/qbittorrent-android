@@ -24,7 +24,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="设置"
+                android:text="Настройки"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="#1a1a1a" />
@@ -74,7 +74,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="当前 WebUI"
+                        android:text="Текущий WebUI"
                         android:textSize="14sp"
                         android:textColor="#666666" />
 
@@ -82,7 +82,7 @@
                         android:id="@+id/tvCurrentUI"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="加载中..."
+                        android:text="Загрузка..."
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#1a1a1a"
@@ -94,7 +94,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="切换"
+                    android:text="Сменить"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
@@ -103,7 +103,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="网络"
+            android:text="Сеть"
             android:textSize="12sp"
             android:textColor="#1D7DD4"
             android:textStyle="bold"
@@ -135,7 +135,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="WebUI 端口"
+                        android:text="Порт WebUI"
                         android:textSize="14sp"
                         android:textColor="#666666" />
 
@@ -157,7 +157,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="保存"
+                    android:text="Сохранить"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
@@ -166,7 +166,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="存储"
+            android:text="Хранилище"
             android:textSize="12sp"
             android:textColor="#1D7DD4"
             android:textStyle="bold"
@@ -191,7 +191,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="默认下载路径"
+                    android:text="Путь загрузок по умолчанию"
                     android:textSize="14sp"
                     android:textColor="#666666" />
 
@@ -218,7 +218,7 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:text="保存"
+                        android:text="Сохранить"
                         android:textSize="14sp"
                         android:layout_marginStart="8dp" />
                 </LinearLayout>
@@ -229,7 +229,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="关于"
+            android:text="О приложении"
             android:textSize="12sp"
             android:textColor="#1D7DD4"
             android:textStyle="bold"
@@ -256,7 +256,7 @@
                 android:id="@+id/tvAppVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="版本"
+                android:text="Версия"
                 android:textSize="14sp"
                 android:textColor="#666666"
                 android:layout_marginTop="4dp" />
@@ -264,7 +264,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="项目主页"
+                android:text="Страница проекта"
                 android:textSize="14sp"
                 android:textColor="#1D7DD4"
                 android:textStyle="bold"
@@ -283,7 +283,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="致谢"
+                android:text="Благодарности"
                 android:textSize="14sp"
                 android:textColor="#1D7DD4"
                 android:textStyle="bold"
@@ -292,7 +292,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="qBittorrent - 原始 BitTorrent 客户端"
+                android:text="qBittorrent — оригинальный BitTorrent-клиент"
                 android:textSize="13sp"
                 android:textColor="#666666"
                 android:layout_marginTop="4dp" />
@@ -308,7 +308,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Qt - 跨平台应用框架"
+                android:text="Qt — кроссплатформенный фреймворк"
                 android:textSize="13sp"
                 android:textColor="#666666"
                 android:layout_marginTop="6dp" />
@@ -324,7 +324,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="libtorrent - BitTorrent 库"
+                android:text="libtorrent — библиотека BitTorrent"
                 android:textSize="13sp"
                 android:textColor="#666666"
                 android:layout_marginTop="6dp" />
@@ -340,7 +340,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OpenSSL - 加密库"
+                android:text="OpenSSL — криптографическая библиотека"
                 android:textSize="13sp"
                 android:textColor="#666666"
                 android:layout_marginTop="6dp" />

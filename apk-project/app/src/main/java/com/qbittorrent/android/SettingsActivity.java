@@ -47,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
         try {
             String ver = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
             ((TextView) findViewById(R.id.tvVersion)).setText("v" + ver);
-            ((TextView) findViewById(R.id.tvAppVersion)).setText("版本 " + ver);
+            ((TextView) findViewById(R.id.tvAppVersion)).setText("Версия " + ver);
         } catch (android.content.pm.PackageManager.NameNotFoundException ignored) {
         }
 
@@ -63,7 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void updateCurrentUI() {
         SharedPreferences prefs = getSharedPreferences("qbt_prefs", MODE_PRIVATE);
         String uiType = prefs.getString("webui_type", "vuetorrent");
-        String label = "vuetorrent".equals(uiType) ? "VueTorrent" : "默认 WebUI";
+        String label = "vuetorrent".equals(uiType) ? "VueTorrent" : "Стандартный WebUI";
         tvCurrentUI.setText(label);
     }
 
@@ -87,12 +87,12 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("qbt_prefs", MODE_PRIVATE);
         String current = prefs.getString("webui_type", "vuetorrent");
         String newUI = "vuetorrent".equals(current) ? "default" : "vuetorrent";
-        String newName = "vuetorrent".equals(newUI) ? "VueTorrent" : "默认 WebUI";
+        String newName = "vuetorrent".equals(newUI) ? "VueTorrent" : "Стандартный WebUI";
 
         new AlertDialog.Builder(this)
-                .setTitle("切换 WebUI")
-                .setMessage("切换为 " + newName + "，应用将重启")
-                .setPositiveButton("确认", (dialog, which) -> {
+                .setTitle("Смена WebUI")
+                .setMessage("Переключиться на " + newName + "? Приложение будет перезапущено")
+                .setPositiveButton("OK", (dialog, which) -> {
                     // 1. 同步写入 SharedPreferences
                     prefs.edit().putString("webui_type", newUI).commit();
 
@@ -131,19 +131,19 @@ public class SettingsActivity extends AppCompatActivity {
                         });
                     }).start();
                 })
-                .setNegativeButton("取消", null)
+                .setNegativeButton("Отмена", null)
                 .show();
     }
 
     private void savePort() {
         String portStr = etPort.getText().toString().trim();
         if (portStr.isEmpty()) {
-            Toast.makeText(this, "请输入端口号", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Введите номер порта", Toast.LENGTH_SHORT).show();
             return;
         }
         Integer parsed = QbtConfig.parsePort(portStr);
         if (parsed == null) {
-            Toast.makeText(this, "无效端口号 (范围 1024-65535)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Неверный порт (допустимо 1024-65535)", Toast.LENGTH_SHORT).show();
             return;
         }
         int port = parsed;
@@ -164,9 +164,9 @@ public class SettingsActivity extends AppCompatActivity {
             int code = QbtApi.setPreferences(oldPort, "{\"web_ui_port\":" + newPort + "}");
             runOnUiThread(() -> {
                 if (code == 200) {
-                    Toast.makeText(this, "端口已改为 " + newPort + "（重启后生效）", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Порт изменён на " + newPort + " (вступит в силу после перезапуска)", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "保存失败 HTTP " + code, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Ошибка сохранения, HTTP " + code, Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();
@@ -175,7 +175,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void saveDownloadPath() {
         String path = etDownloadPath.getText().toString().trim();
         if (path.isEmpty()) {
-            Toast.makeText(this, "请输入下载路径", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Введите путь для загрузок", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -195,9 +195,9 @@ public class SettingsActivity extends AppCompatActivity {
             int code = QbtApi.setPreferences(port, "{\"save_path\":\"" + path.replace("\\", "\\\\") + "\"}");
             runOnUiThread(() -> {
                 if (code == 200) {
-                    Toast.makeText(this, "下载路径已更新", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Путь загрузок обновлён", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "保存失败 HTTP " + code, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Ошибка сохранения, HTTP " + code, Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();

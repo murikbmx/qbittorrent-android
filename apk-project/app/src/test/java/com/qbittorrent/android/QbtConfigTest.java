@@ -46,7 +46,7 @@ public class QbtConfigTest {
         assertTrue(cfg.contains("Session\\Port=59342"));
         assertTrue(cfg.contains("WebUI\\Port=9090"));
         assertTrue(cfg.contains("Downloads\\SavePath=/sdcard/Download"));
-        assertTrue(cfg.contains("General\\Locale=zh_CN"));
+        assertTrue(cfg.contains("General\\Locale=ru"));
         assertTrue(cfg.contains("WebUI\\Username=admin"));
         assertTrue(cfg.contains("[Preferences]"));
     }
@@ -109,7 +109,7 @@ public class QbtConfigTest {
         assertFalse(content.contains("/old/path"));
         assertTrue(content.contains("WebUI\\RootFolder=/data/vuetorrent"));
         assertTrue(content.contains("WebUI\\AlternativeUIEnabled=true"));
-        assertTrue(content.contains("General\\Locale=zh_CN"));
+        assertTrue(content.contains("General\\Locale=ru"));
         assertTrue(content.contains("Session\\Port=59342"));
     }
 
@@ -124,7 +124,7 @@ public class QbtConfigTest {
         assertTrue(content.contains("Downloads\\SavePath=/downloads"));
         assertTrue(content.contains("WebUI\\RootFolder=/data/vuetorrent"));
         assertTrue(content.contains("WebUI\\AlternativeUIEnabled=false"));
-        assertTrue(content.contains("General\\Locale=zh_CN"));
+        assertTrue(content.contains("General\\Locale=ru"));
         assertTrue(content.contains("Session\\Port=59342"));
     }
 

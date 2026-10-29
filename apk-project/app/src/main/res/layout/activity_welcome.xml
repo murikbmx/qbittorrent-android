@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="欢迎使用，请选择你的 WebUI"
+            android:text="Добро пожаловать! Выберите WebUI"
             android:textSize="15sp"
             android:textColor="#666666"
             android:layout_marginBottom="28dp" />
@@ -46,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VueTorrent (推荐)"
+                android:text="VueTorrent (рекомендуется)"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:textColor="#1a1a1a" />
@@ -54,7 +54,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="现代化 WebUI，暗色主题，PWA，移动端优化"
+                android:text="Современный WebUI: тёмная тема, PWA, адаптация для смартфонов"
                 android:textSize="13sp"
                 android:textColor="#888888"
                 android:layout_marginTop="4dp" />
@@ -75,7 +75,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="默认 WebUI"
+                android:text="Стандартный WebUI"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:textColor="#1a1a1a" />
@@ -83,7 +83,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="qBittorrent 原版 WebUI，经典布局"
+                android:text="Оригинальный WebUI qBittorrent, классический вид"
                 android:textSize="13sp"
                 android:textColor="#888888"
                 android:layout_marginTop="4dp" />
@@ -93,7 +93,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WebUI 端口"
+            android:text="Порт WebUI"
             android:textSize="13sp"
             android:textColor="#999999"
             android:layout_marginBottom="4dp"
@@ -115,7 +115,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="默认下载路径"
+            android:text="Путь загрузок по умолчанию"
             android:textSize="13sp"
             android:textColor="#999999"
             android:layout_marginBottom="4dp" />
@@ -137,7 +137,7 @@
             android:id="@+id/btnStart"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:text="开始使用"
+            android:text="Начать"
             android:textSize="16sp"
             android:textColor="#FFFFFF"
             android:backgroundTint="#1D7DD4"
@@ -146,7 +146,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="后续可在「设置」中修改"
+            android:text="Позже это можно изменить в «Настройках»"
             android:textSize="12sp"
             android:textColor="#aaaaaa" />
 

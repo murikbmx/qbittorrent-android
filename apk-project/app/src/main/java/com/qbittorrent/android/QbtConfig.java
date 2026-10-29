@@ -45,7 +45,7 @@ final class QbtConfig {
                 "WebUI\\LocalHostAuth=false\n" +
                 "WebUI\\Username=admin\n" +
                 "WebUI\\Port=" + webuiPort + "\n" +
-                "General\\Locale=zh_CN\n";
+                "General\\Locale=ru\n";
     }
 
     /** 首次启动写入默认配置，已存在则跳过。返回是否写入 */
@@ -80,7 +80,7 @@ final class QbtConfig {
             content = replaceConfigValue(content, "WebUI\\AlternativeUIEnabled=",
                     "WebUI\\AlternativeUIEnabled=" + (useAltUI ? "true" : "false"));
             content = replaceConfigValue(content, "Downloads\\SavePath=", "Downloads\\SavePath=" + downloadPath);
-            content = replaceConfigValue(content, "General\\Locale=", "General\\Locale=zh_CN");
+            content = replaceConfigValue(content, "General\\Locale=", "General\\Locale=ru");
 
             // 如果某个 key 不存在，在合适的位置追加
             if (!content.contains("Session\\Port=")) {
@@ -108,9 +108,9 @@ final class QbtConfig {
             if (!content.contains("General\\Locale=")) {
                 // General\Locale 必须在 [Preferences] section 下
                 if (content.contains("[Preferences]")) {
-                    content = content.replace("[Preferences]", "[Preferences]\nGeneral\\Locale=zh_CN");
+                    content = content.replace("[Preferences]", "[Preferences]\nGeneral\\Locale=ru");
                 } else {
-                    content = "[Preferences]\nGeneral\\Locale=zh_CN\n" + content;
+                    content = "[Preferences]\nGeneral\\Locale=ru\n" + content;
                 }
             }
 
